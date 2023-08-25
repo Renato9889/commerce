@@ -1,0 +1,16 @@
+{% extends "auctions/layout.html" %}
+{% block body %}
+    
+    <h2>Active Listings</h2>
+    <div class="products">
+    {% for item in listitem %}
+        <a class="product" href="{% url 'listing' item.id %}">
+            <img src="{{item.photo_url}}" alt={{item.name}} style="width: 300px;">
+            <h4>{{item.name}}</h4>
+            <span class="price">US${{item.price}}</span>
+            <p class="texttwoproduct">Created {{item.data_post}}</p>
+        </a>
+    {% endfor %}
+    </div>
+
+{% endblock %}
