@@ -16,18 +16,18 @@
                 <p class="logintext">Not signed in.</p>
             {% endif %}
         </div>
-        <div class="logintextlink">
             {% if user.is_authenticated %}
+            <div class="logintextlink">
                 <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+            </div>
             {% else %}
-                <a class="nav-link" href="{% url 'login' %}">Log In</a>
-                <a class="nav-link" href="{% url 'register' %}">Register</a>
+            <div class="logintextlinktwo"><a class="nav-link" href="{% url 'login' %}">Log In</a></div>
+            <div class="logintextlink"><a class="nav-link" href="{% url 'register' %}">Register</a></div>
             {% endif %}
-        </div>
         <div class="topnav">
             <a href="{% url 'index' %}">Active Listings</a>
             <a href="{% url 'categories' %}">Categories</a>
-            <a href="#about">Watchlist</a>
+            <a href="{% url 'watchlist' %}">Watchlist</a>
             <a href="#contact">Create Listing</a>
         </div>       
         <hr>

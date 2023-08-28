@@ -1,21 +1,23 @@
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect, Http404
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse
 
-from .models import User, ListItem
+from .models import User, ListItem, WatchlistItem
 
 
 def index(request):
+    title = "Active Listings"
     return render(request,"auctions/index.html",{
+        "texttitle": title,
         "listitem":ListItem.objects.all()
     })
 
 
 def login_view(request):
     if request.method == "POST":
-
+        
         # Attempt to sign user in
         username = request.POST["username"]
         password = request.POST["password"]
@@ -89,4 +91,18 @@ def categorie_page(request, categorie):
     return render(request,"auctions/categorie.html",{
         "listitem": itens,
         "categorie": categorie
+    })
+
+
+def watchlist(request):
+    if not request.user.is_authenticated:
+        return redirect('login')  
+
+    watchlist_items = WatchlistItem.objects.filter(user=request.user)
+
+
+    title = "Watchlist"
+    return render(request, "auctions/index.html",{
+        "texttitle": title,
+        "listitem" : watchlist_items 
     })

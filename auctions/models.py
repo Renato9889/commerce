@@ -11,7 +11,7 @@ def validate_email(value):
 
 class User(AbstractUser):
     id = models.BigAutoField(primary_key=True)
-    user_name = models.CharField(max_length=100, unique=True)
+    username = models.CharField(max_length=100, unique=True)
     first_name = models.CharField(max_length=100, blank=False)
     last_name = models.CharField(max_length=64)
     email = models.CharField(max_length=64, validators=[validate_email])
@@ -74,3 +74,15 @@ class Bid(models.Model):
 
     def __str__(self):
         return f"Bid ID: {self.id}"
+
+class WatchlistItem(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    item = models.ForeignKey(ListItem, on_delete=models.CASCADE)
+    added_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'item')
+
+    def __str__(self):
+        return f"{self.user.username}'s Watchlist: {self.item.name}"
