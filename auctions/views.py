@@ -1,6 +1,6 @@
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render
 from django.urls import reverse
 
@@ -68,4 +68,25 @@ def listing(request, id):
     item = ListItem.objects.get(pk=id)
     return render(request,"auctions/listings.html",{
         "item": item
+    })
+
+
+def categories(request):
+    categories = ["Electronics","Fashion","Books", "Industrial Equipment","Collectibles and Art","Sports","Health and Beauty", "Geek", "Home and Garden"]
+    imgs = ["../../static/auctions/eletronics.jpeg","../../static/auctions/fashion.jpeg","../../static/auctions/books.jpeg",
+            "../../static/auctions/industrialequipment.jpeg","../../static/auctions/Collectibles.jpeg","../../static/auctions/sports.jpeg",
+            "../../static/auctions/Health.jpeg","../../static/auctions/geek.jpg","../../static/auctions/home.jpeg"]
+    combined_data = list(zip(categories, imgs))
+    return render(request,"auctions/listingcategories.html",{
+        'combined_data':combined_data
+    })
+
+def categorie_page(request, categorie):
+    try:
+        itens = ListItem.objects.filter(type_item=categorie)
+    except ListItem.DoesNotExist:
+        raise Http404("Item não encontrado")
+    return render(request,"auctions/categorie.html",{
+        "listitem": itens,
+        "categorie": categorie
     })

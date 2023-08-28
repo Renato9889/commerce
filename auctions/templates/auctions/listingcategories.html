@@ -1,0 +1,17 @@
+{% extends "auctions/layout.html" %}
+{% block body %}
+    <link rel="stylesheet" type="text/css" href="../../static/auctions/styles.css">
+    <h2>Categories</h2>
+    <div class="image-container">
+        {% for categorie, img in combined_data %}
+        <div class="image-circle">
+            <a class="link-categorie" href="{% url 'categorie' categorie %}">
+                <img src="{{img}}" alt="{{categorie}}">
+            </a> 
+            <div class="image-text"><h4>{{categorie}}</h4></div>
+        </div>
+        
+        {% endfor %}
+    </div>
+
+{% endblock %}

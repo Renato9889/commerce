@@ -25,11 +25,11 @@
             {% endif %}
         </div>
         <div class="topnav">
-            <a class="active" href="{% url 'index' %}">Home</a>
-            <a href="#news">News</a>
-            <a href="#contact">Contact</a>
-            <a href="#about">About</a>
-        </div>         
+            <a href="{% url 'index' %}">Active Listings</a>
+            <a href="{% url 'categories' %}">Categories</a>
+            <a href="#about">Watchlist</a>
+            <a href="#contact">Create Listing</a>
+        </div>       
         <hr>
         {% block body %}
         {% endblock %}
