@@ -7,10 +7,9 @@
             <img src="{{item.photo_url}}" alt={{item.name}} style="width: 300px;">
             <h4>{{item.name}}</h4>
             <p class="textproduct">{{item.description}}</p>
-            <span class="price">US${{item.price}}</span>
+            <span class="price">${{item.price}}</span>
             <p class="texttwoproduct">Created {{item.data_post}}</p>
         </a>
     {% endfor %}
     </div>
-
 {% endblock %}

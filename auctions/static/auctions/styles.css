@@ -228,3 +228,53 @@ h2 {
     color:black;
     text-decoration: none;
 }
+
+.item-listing {
+    display: flex;
+    padding-top: 20px;
+    padding-left: 30px;
+}
+  
+  
+.item-listing img {
+    margin: 30px;
+}
+  
+.item-description {
+    padding-top: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    flex: 1;
+    text-align: justify;
+    
+}
+
+.description-p{
+    font-size: 18px;
+}
+  
+.item-description p {
+    margin: 5px 0; 
+}
+
+.card {
+    width: 400px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.price-details{
+    font-weight: bold;
+    color: #e91e63;
+    font-size: 2.25rem;
+}
+
+.bid-p{
+    font-size: 12px;
+}
+
+.error-p{
+    font-size: 12px;
+    color: #e91e63;
+}

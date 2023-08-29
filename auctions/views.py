@@ -3,6 +3,7 @@ from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render, redirect
 from django.urls import reverse
+from django.shortcuts import get_object_or_404
 
 from .models import User, ListItem, WatchlistItem
 
@@ -68,8 +69,16 @@ def register(request):
 
 def listing(request, id):
     item = ListItem.objects.get(pk=id)
+    
+    watchlist_items = WatchlistItem.objects.filter(user=request.user)
+
+    product_ids = watchlist_items.values_list('item', flat=True)
+
+    user_watchlist = ListItem.objects.filter(id__in=product_ids)
+
     return render(request,"auctions/listings.html",{
-        "item": item
+        "item": item,
+        'user_watchlist': user_watchlist
     })
 
 
@@ -100,9 +109,53 @@ def watchlist(request):
 
     watchlist_items = WatchlistItem.objects.filter(user=request.user)
 
+    product_ids = watchlist_items.values_list('item', flat=True)
 
-    title = "Watchlist"
+    itens = ListItem.objects.filter(id__in=product_ids)
+    
     return render(request, "auctions/index.html",{
-        "texttitle": title,
-        "listitem" : watchlist_items 
+        "texttitle": "Watchlist",
+        "listitem": itens
     })
+
+def add(request, id_item):
+
+    if not request.user.is_authenticated:
+        return redirect('login') 
+
+   
+    item = get_object_or_404(ListItem, id=id_item)
+
+    find_item = WatchlistItem.objects.filter(user=request.user, item=item).first()
+
+    if find_item:
+        find_item.delete()
+    else:
+        WatchlistItem.objects.create(user=request.user, item=item)
+
+    return redirect('watchlist')
+
+def place_bid(request, id):
+
+    item = ListItem.objects.get(id=id)
+    
+    if not request.user.is_authenticated:
+        return redirect('login')
+    
+
+    if request.method == "POST":
+        
+        bid_value = float(request.POST["bid_value"]) 
+
+        if bid_value >= item.price:
+            item.bids = item.bids + 1
+            item.price = bid_value
+            item.save()
+            return render(request, 'auctions/listings.html', {
+                "item":item
+                })
+        else:
+            return render(request, "auctions/listings.html", {
+                "item":item,
+                "message": "Invalid Value Bid."
+            })

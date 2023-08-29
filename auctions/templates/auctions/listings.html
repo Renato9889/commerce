@@ -1,5 +1,55 @@
 {% extends "auctions/layout.html" %}
 {% block body %}
-    <link rel="stylesheet" href="../../static/auctions/styles.css">
-    <h2>{{item.name}}</h2>
+    <style>
+        .container-button{
+            padding-left: 10px;
+        }
+
+        .button-listing {
+            background-color: #333;
+            overflow: hidden;
+            color: white;
+            height: 30px;
+        }
+        
+        .button-listing:hover {
+            background-color: #FFDE59;
+            color: black;
+        }
+    </style>
+    <h2>Listing: {{item.name}}</h2>
+
+    {% if item in user_watchlist %}
+        <form action="{% url 'add' item.id %}" method="post" class="container-button">
+            {% csrf_token %}
+            <button class="button-listing">Remove from Watchlist</button>
+        </form> 
+    {% else %}
+        <form action="{% url 'add' item.id %}" method="post" class="container-button">
+            {% csrf_token %}
+            <button class="button-listing">Watchlist</button>
+        </form> 
+    {% endif %}
+
+    <div class="item-listing">
+        <div class="card">
+            <img src={{item.photo_url}} alt="{{item.name}}">
+        </div>
+        <div class="item-description">
+            <p class="description-p">{{item.description}}</p>
+            <span class="price-details">${{item.price}}</span>
+            <p class="bid-p">{{item.bids}} bid(s) so far. Your bid is the current bid.</p>
+            <form action="{% url 'bid' item.id %}" method="post">
+                {% csrf_token %}
+                <label for="valor">Bid:</label>
+                <input type="text" name="bid_value" pattern="\d+(\.\d{2})?" placeholder="$0.00" required>
+                <input class="button-listing" type="submit" value="Place Bid">
+                {% if message %}
+                    <p class="error-p">{{ message }}</p>
+                {% endif %}
+            </form>
+        </div>
+    </div>
+
+    
 {% endblock %}
