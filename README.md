@@ -1,7 +1,7 @@
 <h1 align="center">Harvard University CS50 Commerce Project - Renato's Project (e-commerce) </h1>
 
 <p align="justify"> This git repository contains an design of an e-commerce auction site that allowed users to post 
-  auction listings, bid on listings, comment on those listings, and add listings to a “watchlist”..</p>
+  auction listings, bid on listings, comment on those listings, and add listings to a “watchlist”.</p>
 
   <img src="https://github.com/Renato9889/commerce/assets/38532053/e57f271f-b7f8-42f5-90f3-1007f8e73ae2">
   <img src="https://github.com/Renato9889/commerce/assets/38532053/7e7b654e-d624-42a3-a400-e756883deea7">
