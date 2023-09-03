@@ -10,7 +10,7 @@
   <img src="https://github.com/Renato9889/commerce/assets/38532053/493f5f53-be17-44c8-b621-396a250442ac">
 
 <h2>Specification and details</h2>
-<a href="[https://youtu.be/mbwFpwo3gHU](https://youtu.be/9ouauawwXZ4?si=vDAWZzQ6ugRTgNDD)">Click here to view the project execution video</a>
+<a href="https://youtu.be/9ouauawwXZ4?si=vDAWZzQ6ugRTgNDD">Click here to view the project execution video</a>
 <ul>
   <li>Django site name: mymy-commerce</li>
   <li>Shows auction listings from the site, in the active listing each item is displayed showing title, description, current price, date posted and photo.</li>
