@@ -8,7 +8,7 @@
   <img src="https://github.com/Renato9889/commerce/assets/38532053/34f44a30-162f-4633-870b-792adeb55cde">
   <img src="https://github.com/Renato9889/commerce/assets/38532053/493f5f53-be17-44c8-b621-396a250442ac">
 
-<h2>Specification e </h2>
+<h2>Specification and details</h2>
 <a href="[https://youtu.be/mbwFpwo3gHU](https://youtu.be/9ouauawwXZ4?si=vDAWZzQ6ugRTgNDD)">Click here to view the project execution video</a>
 <ul>
   <li>Django site name: mymy-commerce</li>
