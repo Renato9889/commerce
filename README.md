@@ -6,7 +6,7 @@
   <img src="https://github.com/Renato9889/commerce/assets/38532053/e57f271f-b7f8-42f5-90f3-1007f8e73ae2">
   <img src="https://github.com/Renato9889/commerce/assets/38532053/7e7b654e-d624-42a3-a400-e756883deea7">
   <img src="https://github.com/Renato9889/commerce/assets/38532053/34f44a30-162f-4633-870b-792adeb55cde">
-  <img src="https://github.com/Renato9889/commerce/assets/38532053/10d05bd7-8655-4f67-86fd-9a556d3de82f">
+  <img src="https://github.com/Renato9889/commerce/assets/38532053/493f5f53-be17-44c8-b621-396a250442ac">
 
 <h2>Specification e </h2>
 <a href="[https://youtu.be/mbwFpwo3gHU](https://youtu.be/9ouauawwXZ4?si=vDAWZzQ6ugRTgNDD)">Click here to view the project execution video</a>
