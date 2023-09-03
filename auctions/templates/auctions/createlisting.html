@@ -1,0 +1,42 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+    <h2>Create Listing</h2>
+
+    {% if message %}
+        <div style="padding-left: 10px;"><p class="error-p">{{ message }}</p></div>
+    {% endif %}
+
+    <form action="{% url 'createlisting' %}" method="post" style="padding-left: 10px; width: 400px;">
+        {% csrf_token %}
+        <div class="form-group">
+            <input class="form-control" autofocus type="text" name="name" placeholder="Name">
+        </div>
+        <div class="form-group">
+            <input class="form-control" autofocus type="text " name="description" placeholder="Description">
+        </div>
+        <div class="form-group">
+            <input class="form-control" autofocus type="text" name="price" pattern="\d+(\.\d{2})?" placeholder="$0.00">
+        </div>
+        <div class="form-group">
+            <input class="form-control" type="text" name="photo_url" placeholder="Photo URL">
+        </div>
+        <div class="form-group">
+            <label for="type_item">Type:</label>
+                <select id="type_item" name="type_item">
+                    <option value="Electronics">Electronics</option>
+                    <option value="Fashion">Fashion</option>
+                    <option value="Books">Books</option>
+                    <option value="Industrial Equipment">Industrial Equipment</option>
+                    <option value="Collectibles and Art">Collectibles and Art</option>
+                    <option value="Sports">Sports</option>
+                    <option value="Health and Beauty">Health and Beauty</option>
+                    <option value="Geek">Geek</option>
+                    <option value="Home and Garden">Home and Garden</option>
+                </select>
+        </div>
+        <input class="btn btn-primary" type="submit" value="Create">
+    </form>
+
+{% endblock %}

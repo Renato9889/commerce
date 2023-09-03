@@ -28,7 +28,8 @@
             <a href="{% url 'index' %}">Active Listings</a>
             <a href="{% url 'categories' %}">Categories</a>
             <a href="{% url 'watchlist' %}">Watchlist</a>
-            <a href="#contact">Create Listing</a>
+            <a href="{% url 'createlisting' %}">Create Listing</a>
+            <a href="{% url 'bids' %}">Bids</a>
         </div>       
         <hr>
         {% block body %}

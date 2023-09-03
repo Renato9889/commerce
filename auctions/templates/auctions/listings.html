@@ -1,20 +1,41 @@
 {% extends "auctions/layout.html" %}
 {% block body %}
     <style>
-        .container-button{
+        h3{
             padding-left: 10px;
+        }
+        .container-button{
+            padding-left: 30px;
         }
 
         .button-listing {
             background-color: #333;
             overflow: hidden;
             color: white;
-            height: 30px;
+            height: 40px;
         }
         
         .button-listing:hover {
             background-color: #FFDE59;
             color: black;
+        }
+        .comment {
+            padding-left: 10px;
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+            background-color: #f4efd9;
+            width: 600px;
+        }
+
+        .comment p {
+            margin: 0;
+            padding: 0;
+        }
+
+        .comment .author {
+            font-weight: bold;
         }
     </style>
     <h2>Listing: {{item.name}}</h2>
@@ -27,7 +48,7 @@
     {% else %}
         <form action="{% url 'add' item.id %}" method="post" class="container-button">
             {% csrf_token %}
-            <button class="button-listing">Watchlist</button>
+            <button class="button-listing">Add to your Watchlist</button>
         </form> 
     {% endif %}
 
@@ -36,20 +57,61 @@
             <img src={{item.photo_url}} alt="{{item.name}}">
         </div>
         <div class="item-description">
+            <h4>{{item.name}}</h4>
             <p class="description-p">{{item.description}}</p>
             <span class="price-details">${{item.price}}</span>
-            <p class="bid-p">{{item.bids}} bid(s) so far. Your bid is the current bid.</p>
-            <form action="{% url 'bid' item.id %}" method="post">
-                {% csrf_token %}
-                <label for="valor">Bid:</label>
-                <input type="text" name="bid_value" pattern="\d+(\.\d{2})?" placeholder="$0.00" required>
-                <input class="button-listing" type="submit" value="Place Bid">
-                {% if message %}
-                    <p class="error-p">{{ message }}</p>
+            {% if item.user != user %}
+                {% if item.status == True %}
+                    <p class="bid-p">{{item.bids}} bid(s) so far. Your bid is the current bid.</p>
+                        <form action="{% url 'bid' item.id %}" method="post">
+                            {% csrf_token %}
+                            <label for="valor">Bid:</label>
+                            <input type="text" name="bid_value" pattern="\d+(\.\d{2})?" placeholder="$0.00" required>
+                            <input class="button-listing" type="submit" value="Place Bid">
+                            {% if message %}
+                                <p class="error-p">{{ message }}</p>
+                            {% endif %}
+                        </form>
+                {% else %}
+                    <p style="color: rgb(208, 52, 35); font-size: 20px;">Item is closed, you can't bid anymore.</p>
                 {% endif %}
-            </form>
+            {% else %}
+                <p style="color: rgb(208, 52, 35); font-size: 15px;">Item was posted by you.</p>
+                {% if item.status == True %}
+                    <form action="{% url 'close_auction' item.id %}" method="post" class="container-button">
+                        {% csrf_token %}
+                        <button class="button-listing">Close Product</button>
+                    </form> 
+                {% else %}
+                    <form action="{% url 'close_auction' item.id %}" method="post" class="container-button">
+                        {% csrf_token %}
+                        <button class="button-listing">Activate product</button>
+                    </form> 
+                {% endif %}
+            {% endif %}
         </div>
     </div>
-
-    
+    <div style="padding-left: 10px;">
+        <h3>Details:</h3>
+        <ul>
+            <li>Listed by: {{item.user.username}}</li>
+            <li>Category: {{item.type_item}}</li>
+            <li>Created: {{item.data_post}}</li>
+        </ul>
+        <h3>Comments:</h3>
+            {% for comment in comments %}
+                <div class="comment">
+                    <p class="author">{{ comment.user.username }}</p>
+                    <p>{{ comment.text }}</p>
+                </div>
+            {% endfor %}
+    </div>
+    <div style="padding-left: 10px;">
+        <h3>Add a Comment:</h3>
+        <form action="{% url 'comment' item.id %}" method="post" style="padding-left: 10px; margin-bottom: 50px;">
+            {% csrf_token %}
+            <textarea name="text" rows="3" cols="40" required></textarea>
+            <input class="button-listing" type="submit" value="Add Comment">
+        </form>
+    </div>
 {% endblock %}

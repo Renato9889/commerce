@@ -1,0 +1,31 @@
+{% extends "auctions/layout.html" %}
+{% block body %}
+    <h2>{{texttitle}}</h2>
+    <div class="bids-itens">
+    {% for item in listitem %}
+        <div class="bid-item">
+            <h2>{{item.name}}</h2>
+            <img src="{{item.photo_url}}" alt={{item.name}} style="width: 300px;">
+            <h5>Bids:</h5>
+            <ul>
+                {% for bid in bids %}
+                    {% if item.id == bid.idItem.id %}
+                        <li>User {{bid.user.username}} placed a bid of ${{bid.bids_amount}}</li> 
+                    {% endif %}
+                {% empty %}
+                    <li style="color: rgb(208, 52, 35);">There are no bids</li>
+                {% endfor %}
+                {% if not item.id in list_bids %}
+                    <li style="color: rgb(208, 52, 35);">There are no bids</li>
+                {% endif %}
+            </ul>
+            <h5>Status</h5>
+                {% if item.status == True%}
+                    <P style="background-color: rgb(103, 222, 24); font-size: 15px; width: 50px; text-align: center;">Active</p>
+                {% else %}
+                    <P style="background-color: rgb(222, 60, 24); font-size: 15px; width: 50px; text-align: center;">Closed</p>
+                {% endif %}       
+        </div>
+    {% endfor %}
+    </div>
+{% endblock %}

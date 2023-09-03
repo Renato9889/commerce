@@ -2,7 +2,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 import re
 from django.core.exceptions import ValidationError
-from django.db.models import F
+from django.db.models import F, Value
 
 
 def validate_email(value):
@@ -41,6 +41,7 @@ class ListItem(models.Model):
     type_item = models.CharField(max_length=20, choices=item_types)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     bids = models.IntegerField(default=0)
+    status = models.BooleanField(default=True)
 
     def __str__(self):
         return self.name
@@ -54,7 +55,7 @@ class Comment(models.Model):
   
 
     def __str__(self):
-        return f"Comment by: {self.user.name}"
+        return f"Comment by: {self.user.username}"
 
 class Bid(models.Model):
     id = models.BigAutoField(primary_key=True)
@@ -62,9 +63,15 @@ class Bid(models.Model):
     idItem = models.ForeignKey(ListItem, on_delete=models.CASCADE,related_name="bid")
     bids_amount =  models.DecimalField(max_digits=10, decimal_places=2, blank=False)
 
-    def save(self, *args, **kwargs):
-        self.idItem.bids = F('bids') + 1
-        self.idItem.save()
+    def save(self, *args, **kwargs):  
+        if self.user == self.idItem.user:
+            raise ValidationError("You cannot bid on your own item.")
+        if self.bids_amount > self.idItem.price:
+            self.idItem.bids = F('bids') +  Value(1)
+            self.idItem.price = self.bids_amount
+            self.idItem.save()
+        else:
+            raise ValidationError("Invalid bid amount, as it is lower than the current bid.")
         super().save(*args, **kwargs)
 
     def delete(self, *args, **kwargs):
